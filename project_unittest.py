@@ -17,7 +17,13 @@ if(rec.rec_list[0][0] == mv2):
 else:
     print("Rec object Failed")
     
-#Call Create_dataset() check if it gets a response from the webpage or reads the file
+#Call Create_dataset() check if it gets a response 
+df = proj.create_dataset()
+if df.empty:
+    print('Dataset creation failed')
+else:
+    print('Dataset created uccessfully')
+    
 
 #test the streaming service 
 svc = proj.get_streaming_svc_list(mv2)
@@ -32,4 +38,3 @@ if len(mvlist) != 0:
     print("rec list success")
 else:
     print("rec list fail")
-    
