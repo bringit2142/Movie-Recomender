@@ -9,7 +9,7 @@ Project Team:
 Movie recommendation system.
 """
 
-#import pandas as pd  #data frames
+import pandas as pd  #data frames
 import requests  # HTTP requests
 
 
@@ -45,11 +45,14 @@ def create_dataset():
     #Using HTTP (not HTTPS) or not secure currently
     #below an example API call to The Movie Database API (TMDA)
     # themoviedb.org
-    api_key = "69edbe08d42f4521bab37e2e5864045b"
-    response = requests.get('http://api.themoviedb.org/3/discover/movie?api_key=' +  \
-                            api_key + '&primary_release_year=2022')
-    response_json = response.json() # store parsed json response
-    print(response_json)
+    #api_key = "69edbe08d42f4521bab37e2e5864045b"
+    #response = requests.get('http://api.themoviedb.org/3/discover/movie?api_key=' +  \
+                            #api_key + '&primary_release_year=2022')
+    #response_json = response.json() # store parsed json response
+    #print(response_json)
+    movies_df = pd.read_csv('movies_metadata.csv', usecols = ['title', 'genres', 'vote_average'])
+    movies_df.head()
+    
 
 def get_streaming_svc_list(movie):
     """create a list of streaming service names
