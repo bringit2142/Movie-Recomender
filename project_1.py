@@ -128,7 +128,7 @@ def clean_data(val):
             return ""
 
 def create_dataset(credit, movies):
-    """merge and format the two datasets (fataframes).
+    """merge and format the two datasets (dataframes).
     Args:
         credit(dataframe): dataframe from credit CSV file
         movies(dataframe): dataframe from movies CSV file
@@ -218,8 +218,9 @@ def add_movies(movie_list, rec):
             if int(j) == i: # recommended movie found in the movie table
                
                mv_id =int(j) # extract the movie id
-               title = raw_movies_df["title_x"][k] # exttract title
+               title = raw_movies_df["title_x"][k] # extract title
                homepage = raw_movies_df["homepage"][k] # extract homepage
+               
                
                 # literal_eval converting string to dictionary form
                 # so we can get list of genre strings
@@ -305,7 +306,7 @@ class Movie():
             title (str): name of the movie.
             genre(str): genre of the movie.
             cast(list): list of names of artists
-            homepage(str): web oage oof the movie
+            homepage(str): web Page of the movie
         """
         self.movie_id = movie_id
         self.title = title
@@ -317,8 +318,8 @@ class Movie():
         """ print a Movie object
         """
         # format genre and cast as comma separated strings from list
-        genre_str = ','.join([str(elem) for elem in self.genre]) 
-        cast_str = ','.join([str(elem) for elem in self.cast]) 
+        genre_str = ', '.join([str(elem) for elem in self.genre]) 
+        cast_str = ', '.join([str(elem) for elem in self.cast]) 
                               
         return f"\nTitle: {self.title}\n" + \
                 f"Genre: {genre_str}\nCast: {cast_str}\n" + \
@@ -369,7 +370,7 @@ if __name__ == "__main__":
     # add the recommended movvies to the recommendation lilst
     count = add_movies(movie_list, rec)
     
-    #if we found some recommendations, displlay to the user
+    #if we found some recommendations, display to the user
     if count != 0:
         print("Here are the recommended Movies:")
         print("--------------------------------")
