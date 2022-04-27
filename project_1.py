@@ -14,6 +14,7 @@ https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
 
 import numpy as np
 import pandas as pd
+import sys
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
@@ -83,7 +84,7 @@ def get_user_input(dataset):
 def get_director_name(col):
     """search a dataframe column for "Director".
     Args:
-        col(dictionary): values of the column in dictionary format
+        col(list): list of dictionaries
     Returns:
         str: Director name value
     """ 
@@ -97,7 +98,7 @@ def get_director_name(col):
 def get_col_list(col, num_of_names):
     """search a dataframe column for values".
     Args:
-        col(dictionary): values of the column in dictionary format
+        col(list): list of dictionaries
         num_of_names(int): limit of number of names to include in the list
     Returns:
         list: list of string values matching the key "name"
@@ -251,43 +252,46 @@ def get_recommendation_movie(title, num_of_recs, movies_df):
     Returns:
         list: list of recommended movie ids
     """ 
-    #axis =1 causes every row sent to the create_soup function
-    movies_df["soup"] = movies_df.apply(create_soup, axis=1)
-    #print(movies_df["soup"].head())
-    
-    
-    #CountVectorizer counts the frequency of each word and outputs
-    # a 2D vector containing frequencies.
-    count_vectorizer = CountVectorizer(stop_words="english")
-    count_matrix = count_vectorizer.fit_transform(movies_df["soup"])
-    
-    # Calculate the below formula for two vectors (arrays)
-    #Similarity = (A.B) / (||A||.||B||) 
-    cosine_sim = cosine_similarity(count_matrix, count_matrix)
-    
-    movies_df = movies_df.reset_index() #reset the data frame index
-    indices = pd.Series(movies_df.index, index=movies_df['title'])
+    try:
+        #axis =1 causes every row sent to the create_soup function
+        movies_df["soup"] = movies_df.apply(create_soup, axis=1)
+        #print(movies_df["soup"].head())
         
-    #take the cosine score of given movie
-    #sort them based on cosine score
-    idx = indices[title]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:num_of_recs+1]
-
-    # create list of indices, using list comprehension
-    movies_indices = [ind[0] for ind in sim_scores]
+        
+        #CountVectorizer counts the frequency of each word and outputs
+        # a 2D vector containing frequencies.
+        count_vectorizer = CountVectorizer(stop_words="english")
+        count_matrix = count_vectorizer.fit_transform(movies_df["soup"])
+        
+        # Calculate the below formula for two vectors (arrays)
+        #Similarity = (A.B) / (||A||.||B||) 
+        cosine_sim = cosine_similarity(count_matrix, count_matrix)
+        
+        movies_df = movies_df.reset_index() #reset the data frame index
+        indices = pd.Series(movies_df.index, index=movies_df['title'])
+            
+        #take the cosine score of given movie
+        #sort them based on cosine score
+        idx = indices[title]
+        sim_scores = list(enumerate(cosine_sim[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        sim_scores = sim_scores[1:num_of_recs+1]
     
-    # Get the movie ids and put in a list and return
-    movie_ids = movies_df["id"].iloc[movies_indices]
-    # index= false gets rid of index numbers
-    movie_str = movie_ids.to_string(index=False)
-    # create list from the strings separated by new lines
-    movie_id_list = movie_str.split('\n')
-    
-    # return list of recommended movie ids
-    return movie_id_list  
-    
+        # create list of indices, using list comprehension
+        movies_indices = [ind[0] for ind in sim_scores]
+        
+        # Get the movie ids and put in a list and return
+        movie_ids = movies_df["id"].iloc[movies_indices]
+        # index= false gets rid of index numbers
+        movie_str = movie_ids.to_string(index=False)
+        # create list from the strings separated by new lines
+        movie_id_list = movie_str.split('\n')
+        
+        # return list of recommended movie ids
+        return movie_id_list  
+    except KeyError:
+        print("Sorry, search caused an error, try a diffrent title")
+        sys.exit(0)
 class Movie():
     """Movie object to store movie information
     
