@@ -201,7 +201,7 @@ def add_movies(movie_list, rec):
         int: number of recommended movies
     """ 
     # Read the movie CSV datasets and create a new dataset
-    # Original datasets were manupulated beofre so we need new raw tables
+    # Original datasets were manupilated before so we need new raw tables
     dataset_tuple = read_dataset("tmdb_5000_credits.csv","tmdb_5000_movies.csv" )
     raw_credits_df = dataset_tuple[0]
     raw_movies_df = dataset_tuple[1]
@@ -211,6 +211,8 @@ def add_movies(movie_list, rec):
 
     #merge movies_df with credits_df dataframe using (id)
     raw_movies_df = raw_credits_df.merge(raw_movies_df, on="id")
+    raw_movies_df['homepage'] = raw_movies_df['homepage'].fillna('Homepage not available')
+
     
     k = 0 # index to the movie rows
     count = 0 # matching/recommended movie count
@@ -222,7 +224,6 @@ def add_movies(movie_list, rec):
                title = raw_movies_df["title_x"][k] # extract title
                homepage = raw_movies_df["homepage"][k] # extract homepage
                
-               
                 # literal_eval converting string to dictionary form
                 # so we can get list of genre strings
                dict_genres = literal_eval(raw_movies_df["genres"][k])  
@@ -232,6 +233,9 @@ def add_movies(movie_list, rec):
                # so we can get list of cast strings
                dict_cast = literal_eval(raw_movies_df["cast"][k])  
                cast_list = get_col_list(dict_cast, 3)
+               if cast_list == []:
+                   cast_list.append('Not available')
+                   
                
                # create a Movie object
                mv = Movie(mv_id,title,genre_list, cast_list, homepage)
@@ -345,7 +349,7 @@ class Recommendations():
         self.rec_list =[] # start with empty list
 
     def add_recommendation(self,movie):
-        """Add a recommended movie info to the recommendations list
+        """Add recommended movie info to the recommendations list
         Args:
            movie(Movie): Movie object
         """
