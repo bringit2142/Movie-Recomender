@@ -37,6 +37,42 @@ def read_dataset(file1, file2):
     #retrun as a tuple of dataframes
     return (credits_df, movies_df)
 
+def get_user_list(dataset, inp):
+    """Search and find matching movie titles.
+    Args:
+        dataset(dataframe): credits dataset
+        inp(str): movie title to search for
+    Returns:
+        list: matching movie title
+    """ 
+    count = 0 # count matching movie titles
+    while(True):
+        title= inp
+        #convert and compare everyting in lower case
+        title = title.lower()
+        # Search movie titles with the matching part of user input
+        # if count == 0 initially, use regex pattern for partial match
+        # After the first loop, use the regex pattern 
+        # for matching an exact title in the movie table
+        if count > 1:
+            regpattern = "^"+title+"$" # after first search match exactly
+        else:
+            regpattern = ".*"+ title +".*"  # First search any matching part
+            
+        match_titles=[] # keep list of matching titles
+        count = 0 # reset count every loop
+        for i in dataset["title"]: # for each title in the table
+            j = str.lower(i) # convert to lower case before search
+            match = regex.search(regpattern, j) # search regex pattern
+            if match:
+                count += 1
+                match_titles.append(i) # add to the list
+                    
+        if count >= 1:
+            return match_titles # print all matching titles
+        else:
+            break;
+   
 def get_user_input(dataset):
     """Prompt user for movie title.
     Args:
@@ -327,11 +363,15 @@ class Movie():
         """
         # format genre and cast as comma separated strings from list
         genre_str = ', '.join([str(elem) for elem in self.genre]) 
-        cast_str = ', '.join([str(elem) for elem in self.cast]) 
-                              
+        cast_str = ', '.join([str(elem) for elem in self.cast])
+        
+        if str(self.homepage) == 'nan':
+            homepage = "N/A"
+        else:
+            homepage = self.homepage
         return f"\nTitle: {self.title}\n" + \
                 f"Genre: {genre_str}\nCast: {cast_str}\n" + \
-                    f"Homepage: {self.homepage}"
+                    f"Homepage: {homepage}"
 
 
 class Recommendations():
@@ -361,13 +401,16 @@ if __name__ == "__main__":
     #read the movie datasets from the files
     dataset_tuple = read_dataset("tmdb_5000_credits.csv","tmdb_5000_movies.csv" )
     
+    #create/prepare dataset for recommendation algorithm
+    # This takes a few seconds !!!!!!
+    print("Creating the data set ....\n")
+    movies_df = create_dataset(dataset_tuple[0], dataset_tuple[1])
+    
     #ask user to enter a movie title for recommending similiar movies
     mv_info= get_user_input(dataset_tuple[0]) #prompt user for movie title
     
     print(f"\nSearching Recommended Movies like: {mv_info} ....")
-    
-    #create/prepare dataset for recommendation algorithm
-    movies_df = create_dataset(dataset_tuple[0], dataset_tuple[1])
+
     
     #run the machine learning algorithm, get 5 similar movie ids
     movie_list= get_recommendation_movie(mv_info, 5,movies_df)

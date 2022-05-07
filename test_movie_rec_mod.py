@@ -8,7 +8,7 @@ Project Team:
 Unit Tests for Movie recommendation system.
     
 """
-import project_1 as proj
+import movie_rec_mod as proj
 import pytest
 
 

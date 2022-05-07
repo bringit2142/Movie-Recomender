@@ -8,13 +8,20 @@ See the flowchart and UML diagram
 Program Files: 
 -------------
 You need to have the following files in the same diretory to run the program:
-project_1.py
-tmdb_5000_movies.csv
-tmdb_5000_credits.csv
+movie_rec_mod.py   # runs a text version of the application
+movie_rec_gui.py   # runs a simple Graphical User Iterface (GUI) Uses movie_rec_mod.py
+tmdb_5000_movies.csv  #movie dataset
+tmdb_5000_credits.csv  #Movie dataset
+movie_help.txt  # Help file for GUI app
 
 Unit tests:
 -----------
-test_project_1.py
+test_movie_rec_mod.py
+
+Unit tests the movie_rec_mod.py
+
+RUN with pytest:
+pytest test_movie_rec_mod.py
 
 Requires installation of packages: 
 ---------------------------------
@@ -23,13 +30,19 @@ pip install scikit-learn
 pip install regex
 pip install numpy
 pip install ast
+pip ionstall tkinter
 
 
 
 Example of Run: 
 ---------------
+With GUI:
+C:\INST326\Final_Project_git\Movie-Recomender>python movie_rec_gui.py
+or
+Without GUI:
+\INST326\Final_Project_git\Movie-Recomender>python movie_rec_mod.py
 
-C:\INST326\Exercise_4\Movie-Recomender>python project_1.py
+Example text version run:
 Enter a Title or part of a Title: Iron
 
 Here are some matching Titles you can search
@@ -75,21 +88,18 @@ Genre: Adventure, Action, Science Fiction
 Cast: Robert Downey Jr., Gwyneth Paltrow, Don Cheadle
 Homepage: http://www.ironmanmovie.com/
 
-C:\INST326\Exercise_4\Movie-Recomender>
-
 
 Example Unit test: 
 ------------------
 
-C:\INST326\Exercise_4\Movie-Recomender>pytest test_project_1.py
+C:\INST326\Final_Project_git\Movie-Recomender>pytest test_movie_rec_mod.py
 =========================================================================================================== test session starts ============================================================================================================
 platform win32 -- Python 3.10.2, pytest-7.1.2, pluggy-1.0.0
-rootdir: C:\INST326\Exercise_4\Movie-Recomender
+rootdir: C:\INST326\Final_Project_git\Movie-Recomender
 plugins: anyio-3.5.0
 collected 8 items
 
-test_project_1.py ........                                                                                                                                                                                                            [100%]
+test_movie_rec_mod.py ........                                                                                                                                                                                                            [100%]
 
 ============================================================================================================ 8 passed in 15.06s ============================================================================================================
 
-C:\INST326\Exercise_4\Movie-Recomender>
