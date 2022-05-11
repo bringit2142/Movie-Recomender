@@ -5,7 +5,7 @@ Project Team:
     Caleb Andree
     Ethan Klondar 
 
-Movie recommendation system Graophical User Interface (GUI)
+Movie recommendation system Graphical User Interface (GUI)
 References:
 Basic search and autofill
 https://www.youtube.com/watch?v=0CXQ3bbBLVk
@@ -56,7 +56,7 @@ def process_input(e):
     Returns:
         none   
     """ 
-    typed = text_entry.get() # get user entered text
+    typed = text_entry.get() # get user input
     if typed == '': # if nothing in the entry, clean the entry
         text_list.delete(0, tk.END)
     
@@ -83,7 +83,7 @@ def list_movies(e):
     #https://stackoverflow.com/questions/15672552/tkinter-listbox-getactive-method
     #get the current list index in the entry box
     cur_selection = text_list.curselection()
-    if len(cur_selection) == 0: # if list box empty don't process anything
+    if len(cur_selection) == 0: # if list box is empty don't process anything
         return
     sel = text_list.get(cur_selection) # get the list box selection
     #print(f"selection {sel}")
@@ -94,7 +94,7 @@ def list_movies(e):
     user_movie_title.update_title(sel)
 
 def display_help():
-    """Called when useer selects an help button, reads the
+    """Called when user selects the help button, reads the
        movie_help.txt and display help text
     Args:
         None
@@ -112,8 +112,8 @@ def display_help():
     
 
 def start_search():
-    """Called when useer selects an search  button, searches the
-    recommended moviesand updates the recommended movie list
+    """Called when user selects the search button, searches the
+    recommended movies and updates the recommended movie list
     Args:
         None
     Returns:
@@ -137,7 +137,7 @@ def start_search():
     # cerate a Recommendation object
     rec= pr.Recommendations()
     
-    # add the recommended movvies to the recommendation list
+    # add the recommended movies to the recommendation list
     count = pr.add_movies(movie_list, rec)
     
     #if we found some recommendations, display to the user in the text box

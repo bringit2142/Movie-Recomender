@@ -71,7 +71,7 @@ def get_user_list(dataset, inp):
         if count >= 1:
             return match_titles # print all matching titles
         else:
-            break;
+            break
    
 def get_user_input(dataset):
     """Prompt user for movie title.
@@ -237,7 +237,7 @@ def add_movies(movie_list, rec):
         int: number of recommended movies
     """ 
     # Read the movie CSV datasets and create a new dataset
-    # Original datasets were manupilated before so we need new raw tables
+    # Original datasets were manipulated before so we need new raw tables
     dataset_tuple = read_dataset("tmdb_5000_credits.csv","tmdb_5000_movies.csv" )
     raw_credits_df = dataset_tuple[0]
     raw_movies_df = dataset_tuple[1]
@@ -418,14 +418,14 @@ if __name__ == "__main__":
     # cerate a Recommendation object
     rec= Recommendations()
     
-    # add the recommended movvies to the recommendation lilst
+    # add the recommended movies to the recommendation list
     count = add_movies(movie_list, rec)
     
     #if we found some recommendations, display to the user
     if count != 0:
         print("Here are the recommended Movies:")
         print("--------------------------------")
-        for i in rec.rec_list: #print each MOvie object
+        for i in rec.rec_list: #print each Movie object
             print(i)
     else:
         print("Sorry we couldn't find any recommendations")
