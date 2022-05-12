@@ -92,14 +92,52 @@ Homepage: http://www.ironmanmovie.com/
 Example Unit test: 
 ------------------
 
-C:\INST326\Final_Project_git\Movie-Recomender>pytest test_movie_rec_mod.py
-=========================================================================================================== test session starts ============================================================================================================
+PS C:\INST326\Final_Project_git\Movie-Recomender> pytest .\test_movie_rec_mod.py
+======================================================================================================================= test session starts ========================================================================================================================
 platform win32 -- Python 3.10.2, pytest-7.1.2, pluggy-1.0.0
 rootdir: C:\INST326\Final_Project_git\Movie-Recomender
 plugins: anyio-3.5.0
-collected 8 items
+collected 9 items
 
-test_movie_rec_mod.py ........                                                                                                                                                                                                            [100%]
+test_movie_rec_mod.py .........                                                                                                                                                                                                                               [100%]
 
-============================================================================================================ 8 passed in 15.06s ============================================================================================================
+======================================================================================================================== 9 passed in 16.28s ======================================================================================================================== 
+PS C:\INST326\Final_Project_git\Movie-Recomender> 
 
+
+
+Referenced and used code from open online resources:
+
+The main movie recommendation for a content based filtering program was based on the ideas and some of the code is
+used from this website:
+https://techvidvan.com/tutorials/movie-recommendation-system-python-machine-learning/
+
+def get_director_name(col):
+---------------------------
+Changed argument name to col instead of x.
+Added doc strings and detailed comments in our code.
+
+def get_col_list(col, num_of_names):
+--------------------------------------
+Changed the list comprehension to open for loop
+Added num_of_names argument to make it more flexible instead of
+the web site example fixed it at 3.
+Added doc strings and detailed comments
+
+def clean_data(val):
+---------------------
+Added doc strings and detailed comments.
+
+def create_soup(col):
+----------------------
+Added doc strings and detailed comments
+
+def create_dataset(credit, movies):
+----------------------------------
+Uses some partial code from the web example but it is
+created as a new function with our own code.
+
+def get_recommendation_movie(title, num_of_recs, movies_df):
+------------------------------------------------------------
+Uses some partial code from the web example but it is
+created as a new function with our own code.

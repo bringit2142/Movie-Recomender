@@ -76,9 +76,9 @@ def test_get_col_list():
     
     assert len(mylist) == 2, "failed getting required number column names"
     
-    assert(mylist[0] == "Daniel Craig"), "failed getting name 1 value"
+    assert mylist[0] == "Daniel Craig", "failed getting name 1 value"
     
-    assert(mylist[1] == "Christoph Waltz"), "failed getting name 2 value"
+    assert mylist[1] == "Christoph Waltz", "failed getting name 2 value"
     
 
 def test_clean_data():
@@ -146,3 +146,26 @@ def test_the_rest_edge_case():
         assert count != 3, "failed finding 3 recommended movies"
     assert pytest_wrapped_e.type == SystemExit
     assert pytest_wrapped_e.value.code == 0
+    
+def test_get_user_list():
+    """Test user entered movie title text search """
+    
+    #read movies dataset file and store in dataframe
+    dataset_tuple = proj.read_dataset("tmdb_5000_credits.csv",
+                                      "tmdb_5000_movies.csv" )
+    
+    movies_df = dataset_tuple[1]
+
+    #test with a partial movie title in the dataset
+    mv_info= "Iron"
+    
+    match_list = proj.get_user_list(movies_df, mv_info)
+    
+    # all movie titles with matching to regex expression ".*Iron*."
+    expected_list = ['Iron Man 3', 'Iron Man', 'Iron Man 2',
+                         'The Iron Giant', 'The Man in the Iron Mask',
+                         'Gridiron Gang', 'Ironclad',
+                         'The Man with the Iron Fists', 'The Iron Lady']
+    
+ 
+    assert match_list == expected_list, "Didn't find matching titles with 'Iron'"

@@ -348,7 +348,7 @@ class Movie():
         Args:
             movie_id(int): unique movie identifier.
             title (str): name of the movie.
-            genre(str): genre of the movie.
+            genre(list): genre of the movie.
             cast(list): list of names of artists
             homepage(str): web Page of the movie
         """
